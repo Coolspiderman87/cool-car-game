@@ -1,0 +1,1 @@
+using UnityEngine;public class BoostPad : MonoBehaviour{    [SerializeField] private float boostForce = 20f;    public float GetBoostForce() => boostForce;}
