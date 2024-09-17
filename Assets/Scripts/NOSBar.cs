@@ -6,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class NOSBar : MonoBehaviour {
 	public Slider BoostBar;
-	public float MaxBoostTime = 3;
+	public float MaxBoostTime = 2.9f;
 	private float CurrentBoostTime;
 	public MSVehicleControllerFree Player;
 	[Range(0.0f, 0.5f)][Tooltip("How much the camera shakes when the vehicle is boosting.")]

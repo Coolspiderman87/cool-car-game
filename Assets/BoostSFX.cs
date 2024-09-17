@@ -8,7 +8,7 @@ public class BoostSFX : MonoBehaviour {
 	public AudioClip audiostartWindSFX;
 	public AudioClip audiostartBoostSFX;
 	public AudioClip audioScreechSFX;
-	// Use this for initialization
+	// Use this for initialization :)
 	void Start () {
 		
 	}
@@ -39,7 +39,7 @@ public class BoostSFX : MonoBehaviour {
 		audiosource.Play ();
 		while (audiosource.isPlaying)
 			yield return null;
-		audiosource.loop = true;
+		audiosource.loop = false;
 		audiosource.clip = audiostartWindSFX;
 		audiosource.Play ();
 	}

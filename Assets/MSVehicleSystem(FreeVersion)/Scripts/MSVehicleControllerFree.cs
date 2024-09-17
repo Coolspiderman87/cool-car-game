@@ -1116,7 +1116,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 			CamerasManager ();
 		}
 	}
-
+	public Image RPMGauge;
 	void DiscoverAverageRpm(){
 		groundedWheels = 0;
 		sumRPM = 0;
@@ -1147,6 +1147,10 @@ public class MSVehicleControllerFree : MonoBehaviour {
 		if (Mathf.Abs (mediumRPM) < 0.01f) {
 			mediumRPM = 0.0f;
 		}
+		//Debug.Log(sumRPM/4);
+
+		//var displayRPM = Mathf.Abs((sumRPM / 4)/500);
+		//RPMGauge.fillAmount = Mathf.Clamp(displayRPM, 0.275f, .75f);
 	}
 
 	#region tireForces
@@ -1485,7 +1489,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 			}
 		}
 	}
-
+	public float RPMMod = 200;
 	void Sounds(){
 		// SONS DE DERRAPAGEM
 		if (_sounds.skiddingSound.standardSound) {
@@ -1499,10 +1503,12 @@ public class MSVehicleControllerFree : MonoBehaviour {
 		}
 		if (currentGear == -1 || currentGear == 0) {
 			velxCurrentRPM = (Mathf.Clamp (KMh, (_vehicleTorque.minVelocityGears [0] * _vehicleTorque.speedOfGear), (_vehicleTorque.maxVelocityGears [0] * _vehicleTorque.speedOfGear)));
+			//Debug.Log(velxCurrentRPM);
 			pitchAUD = Mathf.Clamp (((velxCurrentRPM / (_vehicleTorque.maxVelocityGears [0] * _vehicleTorque.speedOfGear))*_sounds.speedOfEngineSound*engineSoundFactor), 0.85f, _sounds.speedOfEngineSound);
 		} else {
 			velxCurrentRPM = (Mathf.Clamp (KMh, (_vehicleTorque.minVelocityGears [currentGear-1] * _vehicleTorque.speedOfGear), (_vehicleTorque.maxVelocityGears [currentGear-1] * _vehicleTorque.speedOfGear)));
-			nextPitchAUD = ((velxCurrentRPM / (_vehicleTorque.maxVelocityGears [currentGear-1] * _vehicleTorque.speedOfGear)) * _sounds.speedOfEngineSound*engineSoundFactor);
+            //Debug.Log(velxCurrentRPM);
+            nextPitchAUD = ((velxCurrentRPM / (_vehicleTorque.maxVelocityGears [currentGear-1] * _vehicleTorque.speedOfGear)) * _sounds.speedOfEngineSound*engineSoundFactor);
 			if (KMh < (_vehicleTorque.minVelocityGears [currentGear-1] * _vehicleTorque.speedOfGear)) {
 				nextPitchAUD = 0.85f;
 				speedLerpSound = 0.5f;
@@ -1512,7 +1518,9 @@ public class MSVehicleControllerFree : MonoBehaviour {
 				}
 			}
 			pitchAUD = Mathf.Clamp (nextPitchAUD, 0.85f, _sounds.speedOfEngineSound);
-		}
+            var displayRPM = Mathf.Abs((velxCurrentRPM) / RPMMod);
+            RPMGauge.fillAmount = Mathf.Clamp(displayRPM, 0.275f, .75f);
+        }
 		if (_sounds.engineSound) {
 			if (theEngineIsRunning) {
 				engineSoundAUD.volume = Mathf.Lerp (engineSoundAUD.volume, Mathf.Clamp (Mathf.Abs (engineInput), 0.35f, 0.85f), Time.deltaTime*5.0f);
@@ -1992,7 +2000,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 					_wheels.leftRearWheel.rendSKDmarks, _wheels.leftRearWheel.generateSkidBool, _wheels.leftRearWheel.skidMarkShift , 3);
 			} else {
 				_wheels.leftRearWheel.generateSkidBool = false;
-                smokeParticles.Stop();s
+                smokeParticles.Stop();
             }
 		}
 	}
