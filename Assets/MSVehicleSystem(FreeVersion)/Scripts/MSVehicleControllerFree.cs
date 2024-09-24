@@ -477,7 +477,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 	[HideInInspector] 
 	public bool isInsideTheCar;
 
-	MSSceneControllerFree controls;
+	public MSSceneControllerFree controls;
 
 	void Awake(){
 		enableSkidMarksOnStart = true;
@@ -490,7 +490,7 @@ public class MSVehicleControllerFree : MonoBehaviour {
 			this.transform.gameObject.SetActive (false);
 			return;
 		}
-		controls = GameObject.FindObjectOfType (typeof(MSSceneControllerFree))as MSSceneControllerFree;
+		//controls = GameObject.FindObjectOfType (typeof(MSSceneControllerFree))as MSSceneControllerFree;
 		if (!controls) {
 			Debug.LogError ("There must be an object with the 'MSSceneController' component so that vehicles can be managed.");
 			this.transform.gameObject.SetActive (false);
@@ -557,12 +557,12 @@ public class MSVehicleControllerFree : MonoBehaviour {
 			doorPosition[x].transform.parent = transform;
 		}
 
-		if (!isInsideTheCar) {
-			EnableCameras (-1);
-			_vehicleSettings.startOn = false;
-		} else {
+		//if (!isInsideTheCar) {
+		//	EnableCameras (-1);
+		//	_vehicleSettings.startOn = false;
+		//} else {
 			EnableCameras (indexCamera);
-		}
+		//}
 		wheelColliderList = new WheelCollider[(4)];
 		wheelColliderList [0] = _wheels.rightFrontWheel.wheelCollider;
 		wheelColliderList [1] = _wheels.leftFrontWheel.wheelCollider;
